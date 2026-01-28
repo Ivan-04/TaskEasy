@@ -1,1 +1,122 @@
+
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+  height: 100%;
+}
 /* You can add global styles to this file, and also import other style files */
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: radial-gradient(1200px circle at 10% 10%, rgba(63, 81, 181, .10), transparent 60%),
+              radial-gradient(900px circle at 90% 20%, rgba(0, 150, 136, .10), transparent 55%),
+              #f6f7fb;
+}
+
+.w-100 { width: 100%; }
+.text-center { text-align: center; }
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.auth-shell {
+  width: min(440px, 92vw);
+}
+
+.brand-title {
+  margin: 0 0 14px 0;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 1.15;
+  font-size: 32px;
+  text-align: center;
+}
+
+.brand-subtitle {
+  margin: 0 0 18px 0;
+  text-align: center;
+  opacity: 0.72;
+  font-size: 14px;
+}
+
+.auth-card {
+  border-radius: 18px !important;
+  overflow: hidden;
+}
+
+.auth-card .mat-mdc-card-content {
+  padding-top: 18px !important;
+}
+
+.form-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.actions-row {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.link-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.home-shell {
+  max-width: 980px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.home-card {
+  border-radius: 18px !important;
+}
+
+mat-form-field {
+  width: 100%;
+}
