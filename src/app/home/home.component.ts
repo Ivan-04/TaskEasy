@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { User } from "../models/user.model";
 
 @Component({
     selector: 'app-home',
@@ -14,10 +15,14 @@ import { MatToolbarModule } from "@angular/material/toolbar";
     imports: [CommonModule, MatCardModule, MatButtonModule, MatToolbarModule]
 })
 export class HomeComponent {
-    user$!: Observable<any>;
+    user$!: Observable<User | null>;
 
     constructor(private auth: AuthService, private router: Router) {
        this.user$ = this.auth.currentUser$;
+    }
+
+    goToDashboard(): void {
+        this.router.navigate(['/dashboard']);
     }
 
     logout(): void {

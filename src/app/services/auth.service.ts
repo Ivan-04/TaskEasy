@@ -57,6 +57,10 @@ export class AuthService {
         this.currentUserSubject.next(null);
     }
 
+    get currentUser() {
+        return this.currentUserSubject.value;
+    }
+
     private loadCurrentUser(): User | null {
         const raw = localStorage.getItem(this.currentUserKey);
         return raw ? (JSON.parse(raw) as User) : null;
