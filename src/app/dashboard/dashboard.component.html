@@ -1,0 +1,142 @@
+<mat-toolbar class="dashboard-toolbar">
+  <span class="toolbar-spacer"></span>
+  <span class="dashboard-title">TaskEasy Dashboard</span>
+  <span class="toolbar-spacer"></span>
+  <a mat-button routerLink="/home">Home</a>
+</mat-toolbar>
+
+<div class="dash-shell">
+  <div class="board-header">
+    <button mat-raised-button color="primary" type="button" (click)="openAddTask()" *ngIf="!showAddTask">Add Task</button>
+  </div>
+
+  <div *ngIf="showAddTask" class="add-task-wrapper">
+    <app-add-task (cancel)="closeAddTask()"></app-add-task>
+  </div>
+
+  <div *ngIf="editingTask as task" class="edit-task-wrapper">
+    <app-edit-task [task]="task" (cancel)="closeEdit()" (saved)="onSavedEdit()"></app-edit-task>
+  </div>
+
+  <div class="board">
+    <section class="col col--todo" *ngIf="todo$ | async as todo">
+      <div class="col-header">
+        <span class="col-title">Todo</span>
+        <span class="col-count">{{ todo.length }}</span>
+      </div>
+
+      <div class="col-body">
+          <p class="empty" *ngIf="todo.length === 0">No tasks here yet.</p>
+            <mat-card class="task" *ngFor="let t of todo">
+              <mat-card-title class="task-title">{{ t.title }}</mat-card-title>
+              <mat-card-content>
+                <p class="desc">{{ t.description }}</p>
+
+                <mat-chip-set class="chips">
+                  <mat-chip>Difficulty: {{ t.difficulty }}</mat-chip>
+                  <mat-chip class="chip-status">Status: {{ t.status }}</mat-chip>
+                  <mat-chip>Assigned: {{ t.assignedTo ?? '—' }}</mat-chip>
+                </mat-chip-set>
+              </mat-card-content>
+
+              <mat-card-actions class="task-actions">
+                <button mat-stroked-button color="primary" (click)="assignToMe(t)">Assign to me</button>
+                <button mat-button (click)="openEdit(t)">Edit</button>
+                <button mat-button color="warn" (click)="delete(t)">Delete</button>
+              </mat-card-actions>
+            </mat-card>
+      </div>
+    </section>
+
+    <section class="col col--inprogress" *ngIf="inprogress$ | async as inprogress">
+      <div class="col-header">
+        <span class="col-title">In Progress</span>
+        <span class="col-count">{{ inprogress.length }}</span>
+      </div>
+
+      <div class="col-body">
+          <p class="empty" *ngIf="inprogress.length === 0">No tasks here yet.</p>
+            <mat-card class="task" *ngFor="let t of inprogress">
+              <mat-card-title class="task-title">{{ t.title }}</mat-card-title>
+              <mat-card-content>
+                <p class="desc">{{ t.description }}</p>
+
+                <mat-chip-set class="chips">
+                  <mat-chip>Difficulty: {{ t.difficulty }}</mat-chip>
+                  <mat-chip class="chip-status">Status: {{ t.status }}</mat-chip>
+                  <mat-chip>Assigned: {{ t.assignedTo ?? '—' }}</mat-chip>
+                </mat-chip-set>
+              </mat-card-content>
+
+              <mat-card-actions class="task-actions">
+                <button mat-button (click)="move(t, 'pr')">→ PR</button>
+                <button mat-button (click)="move(t, 'done')">→ Done</button>
+
+                <span class="actions-spacer"></span>
+
+                <button mat-button (click)="unassign(t)">Unassign</button>
+                <button mat-button (click)="openEdit(t)">Edit</button>
+                <button mat-button color="warn" (click)="delete(t)">Delete</button>
+              </mat-card-actions>
+            </mat-card>
+      </div>
+    </section>
+
+    <section class="col col--pr" *ngIf="pr$ | async as pr">
+      <div class="col-header">
+        <span class="col-title">PR</span>
+        <span class="col-count">{{ (pr$ | async)?.length ?? 0 }}</span>
+      </div>
+
+      <div class="col-body">
+          <p class="empty" *ngIf="pr.length === 0">No tasks here yet.</p>
+            <mat-card class="task" *ngFor="let t of pr">
+              <mat-card-title class="task-title">{{ t.title }}</mat-card-title>
+              <mat-card-content>
+                <p class="desc">{{ t.description }}</p>
+
+                <mat-chip-set class="chips">
+                  <mat-chip>Difficulty: {{ t.difficulty }}</mat-chip>
+                  <mat-chip class="chip-status">Status: {{ t.status }}</mat-chip>
+                  <mat-chip>Assigned: {{ t.assignedTo ?? '—' }}</mat-chip>
+                </mat-chip-set>
+              </mat-card-content>
+
+              <mat-card-actions class="task-actions">
+                <button mat-button (click)="openEdit(t)">Edit</button>
+                <button mat-button (click)="move(t, 'inprogress')">← Back</button>
+                <button mat-button (click)="move(t, 'done')">Approve → Done</button>
+              </mat-card-actions>
+            </mat-card>
+      </div>
+    </section>
+
+    <section class="col col--done" *ngIf="done$ | async as done">
+      <div class="col-header">
+        <span class="col-title">Done</span>
+        <span class="col-count">{{ done.length }}</span>
+      </div>
+
+      <div class="col-body">
+          <p class="empty" *ngIf="done.length === 0">No tasks here yet.</p>
+
+            <mat-card class="task" *ngFor="let t of done">
+              <mat-card-title class="task-title">{{ t.title }}</mat-card-title>
+              <mat-card-content>
+                <p class="desc">{{ t.description }}</p>
+
+                <mat-chip-set class="chips">
+                  <mat-chip>Difficulty: {{ t.difficulty }}</mat-chip>
+                  <mat-chip class="chip-status">Status: {{ t.status }}</mat-chip>
+                  <mat-chip>Assigned: {{ t.assignedTo ?? '—' }}</mat-chip>
+                </mat-chip-set>
+              </mat-card-content>
+
+              <mat-card-actions class="task-actions">
+                <button mat-button color="warn" (click)="delete(t)">Delete</button>
+              </mat-card-actions>
+            </mat-card>
+      </div>
+    </section>
+  </div>
+</div>

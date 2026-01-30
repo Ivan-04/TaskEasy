@@ -1,21 +1,22 @@
 <mat-toolbar>
-  <span>Welcome to TaskEasy</span>
+  <span class="toolbar-spacer"></span>
   <span class="spacer"></span>
-  <button mat-stroked-button color="warn" (click)="logout()">Logout</button>
+  <span class="toolbar-title">Welcome to TaskEasy</span>
+  <span class="spacer"></span>
+  <div class="toolbar-actions">
+    <button mat-stroked-button color="warn" (click)="goToDashboard()">Dashboard</button>
+    <button mat-stroked-button color="warn" (click)="logout()">Logout</button>
+  </div>
 </mat-toolbar>
 
 <div class="home-shell">
   <mat-card class="home-card">
-    <mat-card-title>Home</mat-card-title>
+    <mat-card-title class="home-title">Home</mat-card-title>
 
     <mat-card-content>
-      <ng-container *ngIf="user$ | async as user; else noUser">
+      <ng-container *ngIf="user$ | async as user">
         <p>You are logged in as: <strong>{{ user.username }}</strong></p>
       </ng-container>
-
-      <ng-template #noUser>
-        <p>No active session.</p>
-      </ng-template>
     </mat-card-content>
   </mat-card>
 </div>
