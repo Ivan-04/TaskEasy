@@ -41,7 +41,7 @@ export class AddTaskComponent {
         this.form = this.fb.group({
             title: ['', [Validators.required, Validators.minLength(3)]],
             description: ['', [Validators.required, Validators.minLength(5)]],
-            difficulty: [null, [Validators.required]]
+            difficulty: [0, [Validators.required]]
         });
 
         const currentUser = this.auth.currentUser;
